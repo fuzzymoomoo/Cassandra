@@ -6,7 +6,7 @@ Cassandra is a learner-led research companion: browse, deliberately capture smal
 
 ## Status
 
-Wave 1 is complete: the userscript has an isolated, local-only research-session tray. Capture, evidence trail, export, and the GPT courier remain intentionally unavailable until later waves.
+Wave 3 is complete: Cassandra now supports deliberate captures, a source-grouped evidence trail, research-packet export/backup, and an input-only GPT-5.6 courier. It never submits a prompt or reads an AI response.
 
 ## Development
 

@@ -22,6 +22,17 @@ Implemented on 2026-07-18:
 
 Wave 2 intentionally does not add an evidence trail, export, or ChatGPT composer filling.
 
-## Wave 3 prompt
+## Wave 3 — complete
 
-Implement Wave 3 only. Add the evidence trail grouped by source with source IDs, source metadata, learner notes, edit/remove/open-source/reorder actions, and non-blocking source-diversity/metadata warnings. Add Markdown packet preview and export, JSON backup/restore, and the GPT-5.6 prompt courier that fills a ChatGPT composer without sending or reading any response; Copy prompt must be the permanent fallback. Enforce the existing 20-capture and 24,000-character limits before generation. Add focused tests, run `npm run check`, update this handoff, commit, and stop.
+Implemented on 2026-07-18:
+
+- Evidence trail grouped by source ID with source links/metadata, learner notes, edit, remove, and reorder controls.
+- Non-blocking one-domain and missing-metadata warnings.
+- Markdown packet preview/export plus JSON backup/restore.
+- GPT-5.6 input-only courier: fill a visible composer when present, otherwise copy the prompt. It never sends or reads a response.
+- Packet generation continues to enforce the frozen 20-capture and 24,000-character limits.
+- `npm run check` passes 18 tests.
+
+## Wave 4 prompt
+
+Implement Wave 4 only. Review privacy and trust boundaries end-to-end, add browser smoke coverage across the controlled three-page fixture, verify that capture remains disabled on private surfaces and that the courier cannot send or read output, then polish README and Build Week submission/demo materials. Run `npm run check`, update this handoff, commit, and stop.
