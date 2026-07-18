@@ -12,7 +12,19 @@ Frozen on 2026-07-18:
 
 Initial environment: Node v24.13.0, npm 11.6.2. Validation command: `npm run check`.
 
-## Wave 1 prompt
+## Wave 1 — complete
 
-Implement Wave 1 only. Build the Tampermonkey userscript shell with an isolated Shadow DOM floating research tray, research-question session creation/editing, local Tampermonkey storage, and clear/delete session controls. Keep capture controls inert or explicitly marked as coming next; do not implement capture selection, evidence trail, packet export, or ChatGPT composer filling. Add focused tests, run `npm run check`, update this handoff, commit, and stop.
+Implemented on 2026-07-18:
 
+- Closed-Shadow-DOM floating tray, collapsed by default.
+- Create and edit a local research question, with capture/source counters.
+- Tampermonkey `GM_*Value` storage adapter, with a local browser fallback for development.
+- Confirmed delete-session control.
+- Inert, visibly marked placeholders for capture, evidence trail, and GPT-5.6 courier.
+- Eight focused tests pass with `npm run check`.
+
+Wave 1 intentionally does not capture page content, render an evidence trail, export packets, or fill ChatGPT.
+
+## Wave 2 prompt
+
+Implement Wave 2 only. Add explicit point/select capture mode for safe short text, headings, links, image references, and deterministically available table rows. Enforce the existing private-surface and form/editable exclusions, 800-character excerpt limit, text sanitization, and Escape cancellation. After selection, require the learner's “Why does this matter to your question?” reflection before saving a capture; unfinished items stay drafts and must not reach the packet. Add focused unit/browser tests against the urban-trees fixtures, run `npm run check`, update this handoff, commit, and stop.

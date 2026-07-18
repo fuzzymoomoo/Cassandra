@@ -1,4 +1,5 @@
-// Wave 0 intentionally ships no UI, storage, capture, or courier behavior.
-// This entrypoint exists solely to prove the single-file Tampermonkey build path.
-void 0;
+import { SessionStore } from "./storage/session-store.js";
+import { ResearchTray } from "./ui/research-tray.js";
 
+// Wave 1: local session tray only. Capture, evidence, export, and GPT courier are not implemented.
+void new ResearchTray(new SessionStore()).mount();
