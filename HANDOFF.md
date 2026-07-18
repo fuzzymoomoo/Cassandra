@@ -33,6 +33,16 @@ Implemented on 2026-07-18:
 - Packet generation continues to enforce the frozen 20-capture and 24,000-character limits.
 - `npm run check` passes 18 tests.
 
-## Wave 4 prompt
+## Wave 4 — complete
 
-Implement Wave 4 only. Review privacy and trust boundaries end-to-end, add browser smoke coverage across the controlled three-page fixture, verify that capture remains disabled on private surfaces and that the courier cannot send or read output, then polish README and Build Week submission/demo materials. Run `npm run check`, update this handoff, commit, and stop.
+Completed on 2026-07-18:
+
+- Applied the supplied Cassandra logo and the reference visual system: midnight header, ivory surfaces, gold provenance accents, purple evidence actions, compact cards, and responsive layout.
+- Embedded the logo into the one-file distributable userscript.
+- Hardened document-start mounting, authentication/CSS-hidden capture exclusions, source-ID allocation, validated backup restore, and ChatGPT-only composer targeting.
+- Amended the GPT contract to state that packet content is quoted, untrusted evidence and never instructions.
+- Added four Chromium smoke tests covering all three fixtures, the acceptance flow through packet preview, private-surface blocking, and no-send/no-read composer filling.
+- Added `SECURITY.md`, `DEMO.md`, and complete install/development guidance.
+- `npm run check` passes 21 unit/trust tests and four Chromium tests.
+
+The MVP build waves are complete. Remaining work is manual Tampermonkey/browser QA, GPT-5.6 demo recording, trademark clearance, and submission packaging.

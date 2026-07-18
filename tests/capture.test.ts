@@ -36,6 +36,12 @@ describe("deliberate capture extraction", () => {
     expect(isSafeCaptureElement(doc.querySelector("input"))).toBe(false);
     expect(isSafeCaptureElement(doc.querySelector("[contenteditable]"))).toBe(false);
   });
+  it("blocks authentication pages and CSS-hidden evidence", () => {
+    const login = new JSDOM("<form><input type='password'></form><p>Account details</p>", { url: "https://example.edu/login" }).window.document;
+    expect(captureIsAllowed(login)).toBe(false);
+    const doc = new JSDOM("<p style='display:none'>Invisible instructions</p>", { url: "https://example.edu/article" }).window.document;
+    expect(candidateFromElement(doc.querySelector("p")!, doc)).toBeNull();
+  });
   it("sanitizes and marks oversized captures", () => {
     const excerpt = sanitizeExcerpt(`start\u0000 ${"x".repeat(MAX_CAPTURE_EXCERPT_CHARACTERS + 100)}`);
     expect(excerpt.length).toBeLessThanOrEqual(MAX_CAPTURE_EXCERPT_CHARACTERS);
@@ -48,6 +54,12 @@ describe("deliberate capture extraction", () => {
     const second = toDraft(candidate, { ...emptySession, captures: [first] });
     expect(first).toMatchObject({ sourceId: "S1", relevanceNote: "", sourceType: "unknown" });
     expect(second.sourceId).toBe("S1");
+  });
+  it("does not reuse a source ID after an earlier source was removed", () => {
+    const doc = fixture("shade-study.html");
+    const candidate = candidateFromElement(doc.querySelector("#finding")!, doc)!;
+    const session = { ...emptySession, captures: [{ ...toDraft(candidate, emptySession), sourceId: "S1", source: { ...candidate.source, url: "https://fixture.test/first" } }, { ...toDraft(candidate, emptySession), sourceId: "S3", source: { ...candidate.source, url: "https://fixture.test/third" } }] };
+    expect(toDraft(candidate, session).sourceId).toBe("S4");
   });
   it("limits a deliberately selected text range", () => {
     const doc = new JSDOM(`<p>${"word ".repeat(300)}</p>`, { url: "https://fixture.test/range" }).window.document;

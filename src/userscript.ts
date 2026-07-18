@@ -1,5 +1,9 @@
 import { SessionStore } from "./storage/session-store.js";
 import { ResearchTray } from "./ui/research-tray.js";
 
-// Wave 1: local session tray only. Capture, evidence, export, and GPT courier are not implemented.
-void new ResearchTray(new SessionStore()).mount();
+function startCassandra(): void {
+  void new ResearchTray(new SessionStore()).mount();
+}
+
+if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", startCassandra, { once: true });
+else startCassandra();

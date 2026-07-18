@@ -6,7 +6,10 @@ export type CaptureCandidate = Omit<Capture, "id" | "sourceId" | "relevanceNote"
 const SKIPPED_TAGS = new Set(["SCRIPT", "STYLE", "NOSCRIPT", "TEMPLATE"]);
 
 export function captureIsAllowed(doc: Document): boolean {
-  return !isBlockedCaptureHost(doc.location.hostname);
+  if (!(["http:", "https:"] as string[]).includes(doc.location.protocol)) return false;
+  if (isBlockedCaptureHost(doc.location.hostname)) return false;
+  if (doc.querySelector("input[type='password']")) return false;
+  return !/(^|\/)(login|log-in|signin|sign-in|auth|oauth|account)(\/|$)/i.test(doc.location.pathname);
 }
 
 export function isSafeCaptureElement(element: Element | null): element is HTMLElement {
@@ -16,6 +19,8 @@ export function isSafeCaptureElement(element: Element | null): element is HTMLEl
   if (element.closest(CAPTURE_EXCLUSIONS.elementSelectors.join(","))) return false;
   for (let current: HTMLElement | null = element; current; current = current.parentElement) {
     if (current.hidden || current.getAttribute("aria-hidden") === "true") return false;
+    const style = current.ownerDocument.defaultView?.getComputedStyle(current);
+    if (style && (style.display === "none" || style.visibility === "hidden" || style.opacity === "0")) return false;
   }
   return !SKIPPED_TAGS.has(element.tagName);
 }
@@ -110,8 +115,9 @@ export function candidateFromSelection(selection: Selection, doc: Document): Cap
 export function toDraft(candidate: CaptureCandidate, session: ResearchSession): Capture {
   const url = candidate.source.canonicalUrl ?? candidate.source.url;
   const existing = session.captures.find((capture) => (capture.source.canonicalUrl ?? capture.source.url) === url);
+  const nextSourceNumber = Math.max(0, ...session.captures.map((capture) => Number.parseInt(capture.sourceId.slice(1), 10) || 0)) + 1;
   return {
-    id: globalThis.crypto.randomUUID(), sourceId: existing?.sourceId ?? `S${new Set(session.captures.map((capture) => capture.sourceId)).size + 1}`,
+    id: globalThis.crypto.randomUUID(), sourceId: existing?.sourceId ?? `S${nextSourceNumber}`,
     ...candidate, relevanceNote: "", sourceType: "unknown"
   };
 }

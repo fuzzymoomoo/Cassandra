@@ -17,5 +17,6 @@ describe("evidence trail session tools", () => {
   it("round-trips a JSON backup and rejects unrelated data", () => {
     expect(restoreSession(backupSession(session))).toEqual(session);
     expect(() => restoreSession('{"format":"other"}')).toThrow("not a Cassandra");
+    expect(() => restoreSession(JSON.stringify({ format: "cassandra-session-v1", session: { ...session, captures: [{ ...session.captures[0], id: '\"><script>' }] } }))).toThrow("invalid capture");
   });
 });
