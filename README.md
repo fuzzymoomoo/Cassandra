@@ -1,6 +1,6 @@
 # Cassandra
 
-![Cassandra logo](spec/16b70681-212f-4b79-858e-1f3a66875e83.png)
+![Concept Image](spec/16b70681-212f-4b79-858e-1f3a66875e83.png)
 
 > **Don't just be right. Bring the evidence.**
 >
