@@ -1,30 +1,27 @@
 # Cassandra handoff
 
+Initial environment: Node v24.13.0, npm 11.6.2. Validation command: `npm run check`.
+
 ## Wave 0 — complete
 
-Frozen on 2026-07-18:
-
-- `ResearchSession` and `Capture` contracts in `src/contracts.ts`.
-- Markdown packet v1 and the GPT-5.6 study-partner prompt in `src/packet.ts`.
-- Capture exclusions and limits: 800 characters per item, 20 captures and 24,000 packet characters.
-- Controlled three-page urban-trees fixture in `fixtures/urban-trees/`.
-- Strict TypeScript, esbuild, and Vitest skeleton. No UI or capture logic exists yet by design.
-
-Initial environment: Node v24.13.0, npm 11.6.2. Validation command: `npm run check`.
+Frozen data contracts, safety limits/exclusions, Markdown packet v1, GPT-5.6 study-partner prompt, controlled urban-trees fixtures, and strict TypeScript/esbuild/Vitest skeleton.
 
 ## Wave 1 — complete
 
+Implemented a closed-Shadow-DOM floating tray, local research-question session creation/editing, Tampermonkey-backed local storage, and confirmed session deletion. Capture, trail, and courier controls remained unavailable.
+
+## Wave 2 — complete
+
 Implemented on 2026-07-18:
 
-- Closed-Shadow-DOM floating tray, collapsed by default.
-- Create and edit a local research question, with capture/source counters.
-- Tampermonkey `GM_*Value` storage adapter, with a local browser fallback for development.
-- Confirmed delete-session control.
-- Inert, visibly marked placeholders for capture, evidence trail, and GPT-5.6 courier.
-- Eight focused tests pass with `npm run check`.
+- Explicit point/select capture mode with Escape cancellation.
+- Safe short capture types: text, headings, links, image references, and table rows with deterministic headers.
+- Private/local-host and form/editable exclusions, text sanitization, and the frozen 800-character limit with a truncation marker.
+- Persisted blank-reflection drafts; the required learner reflection is needed before eligibility for the research packet.
+- Fixture-based capture tests. `npm run check` passes 14 tests.
 
-Wave 1 intentionally does not capture page content, render an evidence trail, export packets, or fill ChatGPT.
+Wave 2 intentionally does not add an evidence trail, export, or ChatGPT composer filling.
 
-## Wave 2 prompt
+## Wave 3 prompt
 
-Implement Wave 2 only. Add explicit point/select capture mode for safe short text, headings, links, image references, and deterministically available table rows. Enforce the existing private-surface and form/editable exclusions, 800-character excerpt limit, text sanitization, and Escape cancellation. After selection, require the learner's “Why does this matter to your question?” reflection before saving a capture; unfinished items stay drafts and must not reach the packet. Add focused unit/browser tests against the urban-trees fixtures, run `npm run check`, update this handoff, commit, and stop.
+Implement Wave 3 only. Add the evidence trail grouped by source with source IDs, source metadata, learner notes, edit/remove/open-source/reorder actions, and non-blocking source-diversity/metadata warnings. Add Markdown packet preview and export, JSON backup/restore, and the GPT-5.6 prompt courier that fills a ChatGPT composer without sending or reading any response; Copy prompt must be the permanent fallback. Enforce the existing 20-capture and 24,000-character limits before generation. Add focused tests, run `npm run check`, update this handoff, commit, and stop.
