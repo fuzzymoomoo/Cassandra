@@ -23,6 +23,20 @@ test("mounts the branded userscript shell on every controlled fixture", async ({
   }
 });
 
+test("long tray screens scroll to the final control on a short viewport", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 600 });
+  await installFixtureRoutes(page);
+  await page.goto("https://fixture.test/shade-study.html?cassandra-browser-test=1");
+  await tray(page).getByRole("button", { name: "Open Cassandra" }).click();
+  await tray(page).getByLabel("Research question").fill("How do urban trees affect summer temperatures?");
+  await tray(page).getByRole("button", { name: "Create research session" }).click();
+  const finalControl = tray(page).getByRole("button", { name: "Delete this research session" });
+  await finalControl.scrollIntoViewIfNeeded();
+  await expect(finalControl).toBeVisible();
+  const box = await finalControl.boundingBox();
+  expect(box && box.y + box.height).toBeLessThanOrEqual(600);
+});
+
 test("automates question, three-source capture, trail, and packet preview", async ({ page }) => {
   await installFixtureRoutes(page);
   const pages = [
